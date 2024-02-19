@@ -1,5 +1,6 @@
 import { Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
+import Task from './Task'
 
 const Container = styled.div`
     background-color: #f4f6f7;
@@ -31,19 +32,21 @@ export default function Column({ title, tasks, id }) {
             <Title>
                 {title}
             </Title>
-            {/*Provided e Snapshot são utilizados para alterar o estado das tasks*/}
             <Droppable droppableId={id}>
-                {(provided, snapshot) => {
+                {/*Provided e Snapshot são utilizados para alterar o estado das tasks*/}
+                {(provided, snapshot) => (
                     <TaskList
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        isDraggingOver={snapshot.isDraggingOver}>
-
-                        {/*Coloque aqui suas tasks!*/}
+                        isDraggingOver={snapshot.isDraggingOver}
+                    >
+                        {/* Coloque aqui suas tasks! */}
                         {provided.placeholder}
 
+                        <Task task={{ id: 123, title: "Faça um kanban" }} index='1' />
+
                     </TaskList>
-                }}
+                )}
             </Droppable>
         </Container>
     )

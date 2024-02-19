@@ -38,14 +38,3 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 Agora, você pode acessar o aplicativo Kanban em [http://localhost:3000](http://localhost:3000) e interagir com suas tarefas.
 
 Sinta-se à vontade para explorar, contribuir e aprimorar este projeto!
-
-
-~~~
-
-Utilizei react-beautiful-dnd package 
-O React Beautiful DnD é uma biblioteca de arrastar e soltar acessível desenvolvida pela Atlassian.
-
-Utilizei styled-components
-Styled-components is a library that allows you to write CSS in JS while building custom components in Reactjs 
-
-~~~
