@@ -14,7 +14,7 @@ Este repositório contém o código-fonte para um aplicativo simples de Kanban, 
 Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclui as seguintes funcionalidades:
 
 - ✅ **Três Colunas:** "To Do", "Doing" e "Ready", para organizar suas tarefas.
-- 🔲 **Adição, Movimentação e Remoção:** Os usuários podem adicionar novas tarefas, movê-las entre as colunas e removê-las conforme necessário.
+- ✅ **Adição, Movimentação e Remoção:** Os usuários podem adicionar novas tarefas, movê-las entre as colunas e removê-las conforme necessário.
 - 🔲 **Detalhes da Tarefa:** As tarefas possuem nome e data de conclusão.
 - 🔲 **Filtros e Ordenação:** Implementei funcionalidades de filtro e ordenação para facilitar o gerenciamento das tarefas.
 - 🔲 **Pesquisa por Texto (Opcional):** Adicionei a capacidade de pesquisar tarefas por texto, tornando a experiência mais personalizada.
@@ -28,6 +28,9 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 ### Construção:
 - React Beautiful DnD: Utilizei a biblioteca React Beautiful DnD para facilitar a implementação de arrastar e soltar, proporcionando uma interação intuitiva com as tarefas.
 - Styled-Components: Utilizei a biblioteca Styled-Components, que permite escrever CSS em JS enquanto constrói componentes personalizados no React, proporcionando uma estilização modular e reutilizável.
+
+### Features Adicionais:
+- Editar as tarefas criadas.
   
 ## Como Executar o Projeto:
 

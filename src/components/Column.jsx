@@ -1,6 +1,7 @@
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import Task from './Task';
+import { useState } from 'react';
 
 const DroppableContainer = styled.div`
     padding: 3px;
@@ -27,7 +28,14 @@ const Title = styled.h3`
     position: sticky;
 `;
 
-export default function Column({ title, tasks, id }) {
+export default function Column({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) {
+    const [newCardInput, setNewCardInput] = useState('');
+
+    const handleAddCard = () => {
+        onAddCard(id, newCardInput);
+        setNewCardInput('');
+    };
+
     return (
         <Container>
             <Title>{title}</Title>
@@ -39,9 +47,24 @@ export default function Column({ title, tasks, id }) {
                         $isDraggingOver={snapshot.isDraggingOver}
                     >
                         {tasks.map((task, index) => (
-                            <Task key={index} index={index} task={task} />
+                            <Task
+                                key={index}
+                                index={index}
+                                task={task}
+                                onDelete={onDelete}
+                                onUpdateTitle={onUpdateTitle}
+                            />
                         ))}
                         {provided.placeholder}
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Enter new card title"
+                                value={newCardInput}
+                                onChange={(e) => setNewCardInput(e.target.value)}
+                            />
+                            <button onClick={handleAddCard}>Add Card</button>
+                        </div>
                     </DroppableContainer>
                 )}
             </Droppable>

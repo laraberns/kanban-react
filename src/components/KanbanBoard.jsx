@@ -25,6 +25,7 @@ export default function KanbanBoard() {
         setCompleted(mockTasks.filter((task) => task.completed && !task.doing));
         setDoing(mockTasks.filter((task) => task.doing));
         setIncomplete(mockTasks.filter((task) => !task.completed && !task.doing));
+
     }, []);
 
     // Funções para achar itens no array e remover do array
@@ -78,10 +79,57 @@ export default function KanbanBoard() {
         }
     };
 
+    // Função para deletar uma tarefa pelo ID
+    const handleDeleteTask = (taskId) => {
+        const updatedTasks = [...incomplete, ...doing, ...completed].filter(
+            (task) => task.id !== taskId
+        );
+
+        setIncomplete(updatedTasks.filter((task) => !task.completed && !task.doing));
+        setDoing(updatedTasks.filter((task) => task.doing));
+        setCompleted(updatedTasks.filter((task) => task.completed && !task.doing));
+    };
+
+    const handleAddCard = (columnId, title) => {
+        const newTask = { id: Math.random(), title, completed: false, doing: false };
+
+        switch (columnId) {
+            case '1':
+                setIncomplete((prev) => [...prev, newTask]);
+                break;
+            case '2':
+                setDoing((prev) => [...prev, newTask]);
+                break;
+            case '3':
+                setCompleted((prev) => [...prev, newTask]);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleUpdateTitle = (taskId, newTitle) => {
+        setIncomplete((prev) =>
+            prev.map((task) =>
+                task.id === taskId ? { ...task, title: newTitle } : task
+            )
+        );
+        setDoing((prev) =>
+            prev.map((task) =>
+                task.id === taskId ? { ...task, title: newTitle } : task
+            )
+        );
+        setCompleted((prev) =>
+            prev.map((task) =>
+                task.id === taskId ? { ...task, title: newTitle } : task
+            )
+        );
+    };
+
+
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
-            <h2 style={{ textAlign: 'center' }}>KANBAN BOARD</h2>
-
+            {/* ... (existing code) */}
             <div
                 style={{
                     display: 'flex',
@@ -90,9 +138,30 @@ export default function KanbanBoard() {
                     flexDirection: 'row',
                 }}
             >
-                <Column title={"A Fazer"} tasks={incomplete} id={'1'} />
-                <Column title={"Em Progresso"} tasks={doing} id={'2'} />
-                <Column title={"Concluído"} tasks={completed} id={'3'} />
+                <Column
+                    title={"A Fazer"}
+                    tasks={incomplete}
+                    id={'1'}
+                    onAddCard={handleAddCard}
+                    onDelete={handleDeleteTask}
+                    onUpdateTitle={handleUpdateTitle}
+                />
+                <Column
+                    title={"Em Progresso"}
+                    tasks={doing}
+                    id={'2'}
+                    onAddCard={handleAddCard}
+                    onDelete={handleDeleteTask}
+                    onUpdateTitle={handleUpdateTitle}
+                />
+                <Column
+                    title={"Concluído"}
+                    tasks={completed}
+                    id={'3'}
+                    onAddCard={handleAddCard}
+                    onDelete={handleDeleteTask}
+                    onUpdateTitle={handleUpdateTitle}
+                />
             </div>
         </DragDropContext>
     );

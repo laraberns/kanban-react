@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
@@ -30,8 +31,30 @@ function bgcolorchange(props) {
         : '#fffada';
 }
 
+export default function Task({ task, index, onDelete, onUpdateTitle }) {
+    const [newTitle, setNewTitle] = useState(task.title);
+    const [isEditing, setIsEditing] = useState(false);
 
-export default function Task({ task, index }) {
+    const handleChangeTitle = (event) => {
+        setNewTitle(event.target.value);
+    };
+
+    const handleBlurTitle = () => {
+        onUpdateTitle(task.id, newTitle);
+        setIsEditing(false);
+    };
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            onUpdateTitle(task.id, newTitle);
+            setIsEditing(false);
+        }
+    };
+
     return (
         <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
             {(provided, snapshot) => (
@@ -41,17 +64,25 @@ export default function Task({ task, index }) {
                     ref={provided.innerRef}
                     isDragging={snapshot.isDragging}
                 >
-                    <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}>
-                        <span>
-                            <small>
-                                #{task.id}
-                                {''}
-                            </small>
-                        </span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '2' }}>
-                        <TextContent>{task.title}</TextContent>
-                    </div>
+                    <button onClick={() => onDelete(task.id)}>Excluir</button>
+                    {isEditing ? (
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '2' }}>
+                            <TextContent>
+                                <input
+                                    type="text"
+                                    value={newTitle}
+                                    onChange={handleChangeTitle}
+                                    onBlur={handleBlurTitle}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            </TextContent>
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '2' }}>
+                            <TextContent>{task.title}</TextContent>
+                        </div>
+                    )}
+                    <button onClick={handleEditClick}>Editar</button>
                     {provided.placeholder}
                 </Container>
             )}
