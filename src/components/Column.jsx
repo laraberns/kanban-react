@@ -1,6 +1,13 @@
-import { Droppable } from 'react-beautiful-dnd'
-import styled from 'styled-components'
-import Task from './Task'
+import { Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
+import Task from './Task';
+
+const DroppableContainer = styled.div`
+    padding: 3px;
+    background-color: ${(props) => (props.isDraggingOver ? '#e0e0e0' : '#f4f5f7')};
+    flex-grow: 1;
+    min-height: 100px;
+`;
 
 const Container = styled.div`
     background-color: #f4f6f7;
@@ -8,46 +15,36 @@ const Container = styled.div`
     width: 300px;
     height: 300px;
     overflow-y: scroll;
-    -ms-overflow-style:none;
-    scrollbar-width:none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     border: 1px solid grey;
-`
+`;
 
 const Title = styled.h3`
     padding: 8px;
     background-color: pink;
     text-align: center;
     position: sticky;
-`
-const TaskList = styled.div`
-    padding: 3px;
-    background-color: #f4f5f7;
-    flex-grow: 1;
-    min-height: 100px;
-`
+`;
 
 export default function Column({ title, tasks, id }) {
     return (
         <Container>
-            <Title>
-                {title}
-            </Title>
+            <Title>{title}</Title>
             <Droppable droppableId={id}>
-                {/*Provided e Snapshot são utilizados para alterar o estado das tasks*/}
                 {(provided, snapshot) => (
-                    <TaskList
+                    <DroppableContainer
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        isDraggingOver={snapshot.isDraggingOver}
+                        $isDraggingOver={snapshot.isDraggingOver}
                     >
-                        {/* Coloque aqui suas tasks! */}
+                        {tasks.map((task, index) => (
+                            <Task key={index} index={index} task={task} />
+                        ))}
                         {provided.placeholder}
-
-                        <Task task={{ id: 123, title: "Faça um kanban" }} index='1' />
-
-                    </TaskList>
+                    </DroppableContainer>
                 )}
             </Droppable>
         </Container>
-    )
+    );
 }

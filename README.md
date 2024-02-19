@@ -22,7 +22,7 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 ### Tecnologias e Práticas:
 
 - ✅ **ReactJS:** Utilizei o React para o desenvolvimento da interface, aproveitando sua eficiência e reatividade.
-- 🔲 **Ciclo de Vida e Gerenciamento de Estado:** Aplicei conceitos do ciclo de vida do React e gerenciamento de estado para uma experiência de usuário suave e eficiente.
+- ✅ **Ciclo de Vida e Gerenciamento de Estado:** Aplicei conceitos do ciclo de vida do React e gerenciamento de estado para uma experiência de usuário suave e eficiente.
 - 🔲 **Bootstrap React (Opcional):** Ofereci a opção de utilizar o Bootstrap React para acelerar o desenvolvimento, mantendo a estética moderna e responsiva.
 
 ### Construção:
@@ -35,6 +35,6 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 2. Instale as dependências: `npm install`
 3. Inicie o frontend: `npm start`
 
-Agora, você pode acessar o aplicativo Kanban em [http://localhost:3000](http://localhost:3000) e interagir com suas tarefas.
+Agora, você pode acessar o aplicativo Kanban em [http://localhost:3000](http://localhost:3001) e interagir com suas tarefas.
 
 Sinta-se à vontade para explorar, contribuir e aprimorar este projeto!
