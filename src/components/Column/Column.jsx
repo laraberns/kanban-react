@@ -6,35 +6,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye, faSortAmountUp, faSortAmountDown, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
-    const [sortAscending, setSortAscending] = useState(true);
-    const [isColumnHidden, setIsColumnHidden] = useState(false);
-    const [showNewCardForm, setShowNewCardForm] = useState(false);
+    const [state, setState] = useState({
+        sortAscending: true,
+        isColumnHidden: false,
+        showNewCardForm: false,
+    });
 
     const handleSortTasks = () => {
-        setSortAscending((prevSortAscending) => !prevSortAscending);
-    };
-
-    const handleHideColumn = () => {
-        setIsColumnHidden(true);
-    };
-
-    const handleShowColumn = () => {
-        setIsColumnHidden(false);
+        setState((prevState) => ({ ...prevState, sortAscending: !prevState.sortAscending }));
     };
 
     const handleToggleNewCardForm = () => {
-        setShowNewCardForm(!showNewCardForm);
+        setState((prevState) => ({ ...prevState, showNewCardForm: !prevState.showNewCardForm }));
     };
 
+    const handleHideColumn = () => {
+        setState((prevState) => ({ ...prevState, isColumnHidden: true }));
+    };
+
+    const handleShowColumn = () => {
+        setState((prevState) => ({ ...prevState, isColumnHidden: false }));
+    };
+
+    const renderButton = (onClick, icon, title) => (
+        <button className="btn" onClick={onClick} title={title}>
+            <FontAwesomeIcon icon={icon} className="mr-2" />
+        </button>
+    );
+
     const sortedTasks = [...tasks].sort((a, b) => {
-        const orderMultiplier = sortAscending ? 1 : -1;
+        const orderMultiplier = state.sortAscending ? 1 : -1;
         return orderMultiplier * (a.id - b.id);
     });
 
-    if (isColumnHidden) {
+    if (state.isColumnHidden) {
         return (
             <div>
-                <button onClick={handleShowColumn}>Mostrar Coluna</button>
+                {renderButton(handleShowColumn, faEye, "Mostrar Coluna")}
             </div>
         );
     }
@@ -47,30 +55,14 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
                 </div>
 
                 <div className="flex items-center m-3 justify-center gap-2">
-                    <button className="btn" onClick={handleSortTasks} title="Ordenar por Id (Crescente)">
-                        <FontAwesomeIcon icon={faSortAmountUp} className="mr-2" />
-                    </button>
-                    <button className="btn" onClick={() => setSortAscending(false)} title="Ordenar por Id (Decrescente)">
-                        <FontAwesomeIcon icon={faSortAmountDown} className="mr-2" />
-                    </button>
-                    <button className="btn" onClick={handleHideColumn} title={isColumnHidden ? "Mostrar Coluna" : "Esconder Coluna"}>
-                        {isColumnHidden ? (
-                            <>
-                                <FontAwesomeIcon icon={faEye} className="mr-2" />
-                            </>
-                        ) : (
-                            <>
-                                <FontAwesomeIcon icon={faEyeSlash} className="mr-2" />
-                            </>
-                        )}
-                    </button>
-                    <button className="btn" onClick={handleToggleNewCardForm} title="Adicionar novo card">
-                        <FontAwesomeIcon icon={showNewCardForm ? faMinus : faPlus} />
-                    </button>
+                    {renderButton(handleSortTasks, faSortAmountUp, "Ordenar por Id (Crescente)")}
+                    {renderButton(() => setState((prev) => ({ ...prev, sortAscending: false })), faSortAmountDown, "Ordenar por Id (Decrescente)")}
+                    {renderButton(state.isColumnHidden ? handleShowColumn : handleHideColumn, state.isColumnHidden ? faEye : faEyeSlash, state.isColumnHidden ? "Mostrar Coluna" : "Esconder Coluna")}
+                    {renderButton(handleToggleNewCardForm, state.showNewCardForm ? faMinus : faPlus, "Adicionar novo card")}
                 </div>
 
                 <div className="h-96 overflow-y-auto bg-gray-200 rounded-md">
-                    {showNewCardForm && <NewCardForm onAddCard={onAddCard} columnId={id} />}
+                    {state.showNewCardForm && <NewCardForm onAddCard={onAddCard} columnId={id} />}
                     <Droppable droppableId={id}>
                         {(provided, snapshot) => (
                             <div
