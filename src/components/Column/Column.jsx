@@ -7,7 +7,6 @@ import { faEyeSlash, faEye, faSortAmountUp, faSortAmountDown, faPlus, faMinus } 
 import HandleAddCard from '../KanbanBoard/HandleAddCard';
 
 const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setDoing, setCompleted }) => {
-    //console.log('Task Object:', tasks);
     const [state, setState] = useState({
         sortAscending: true,
         isColumnHidden: false,

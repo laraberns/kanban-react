@@ -7,7 +7,6 @@ import EditableTaskTitle from './EditableTaskTitle';
 import { useState } from 'react';
 
 export default function Task({ task, index, onDelete, onUpdateTitle }) {
-    //console.log('Task Object:', task);
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
