@@ -37,7 +37,7 @@ const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, com
         case '3':
             setCompleted((prev) => [
                 ...prev,
-                { ...task, completed: true, completionDate: new Date().toISOString().slice(0, 10) },
+                { ...task, completed: true, completionDate: new Date().toISOString().slice(0, 10) }, //Set data para hoje quando mover o card para "Ready"
             ]);
             break;
         case '2':

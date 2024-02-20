@@ -1,4 +1,4 @@
-
+let taskIdCounter = 10; // Id inicial
 
 const HandleAddCard = ({
     columnId,
@@ -7,7 +7,7 @@ const HandleAddCard = ({
     setDoing,
     setCompleted
 }) => {
-    const newTask = { id: Math.random(), title, completed: false, doing: false };
+    const newTask = { id: taskIdCounter++, title, completed: false, doing: false };
 
     switch (columnId) {
         case '1':

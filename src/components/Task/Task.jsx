@@ -33,6 +33,7 @@ export default function Task({ task, index, onDelete, onUpdateTitle }) {
                         {task.completed && (
                             <p>Data de conclusão: {task.completionDate}</p>
                         )}
+                        <p>Id: {task.id}</p>
                     </TaskContent>
                 )}
                 {provided.placeholder}

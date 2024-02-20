@@ -70,6 +70,19 @@ export default function KanbanBoard() {
             setCompleted,
         });
     };
+
+    const filterTasksByColumn = (columnId) => {
+        switch (columnId) {
+            case '1':
+                return incomplete;
+            case '2':
+                return doing;
+            case '3':
+                return completed;
+            default:
+                return [];
+        }
+    };
     
 
     return (
