@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Task from '../Task/Task';
 import NewCardForm from './NewCardForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye, faSortAmountUp, faSortAmountDown, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import HandleAddCard from '../KanbanBoard/HandleAddCard';
 
-const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
+const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setDoing, setCompleted }) => {
+    //console.log('Task Object:', tasks);
     const [state, setState] = useState({
         sortAscending: true,
         isColumnHidden: false,
         showNewCardForm: false,
+    });
+
+    // Use tasks directly instead of maintaining a separate state for renderedTasks
+    const sortedTasks = [...tasks].sort((a, b) => {
+        const orderMultiplier = state.sortAscending ? 1 : -1;
+        return orderMultiplier * (a.id - b.id);
     });
 
     const handleSortTasks = () => {
@@ -34,10 +42,20 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
         </button>
     );
 
-    const sortedTasks = [...tasks].sort((a, b) => {
-        const orderMultiplier = state.sortAscending ? 1 : -1;
-        return orderMultiplier * (a.id - b.id);
-    });
+    const handleAddCard = async (columnId, title) => {
+        try {
+            setState((prev) => ({ ...prev, showNewCardForm: false }));
+            await HandleAddCard({
+                columnId,
+                title,
+                setIncomplete,
+                setDoing,
+                setCompleted,
+            });
+        } catch (error) {
+            console.error('Error adding card:', error.message);
+        }
+    };
 
     if (state.isColumnHidden) {
         return (
@@ -62,7 +80,7 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
                 </div>
 
                 <div className="h-96 overflow-y-auto bg-gray-200 rounded-md">
-                    {state.showNewCardForm && <NewCardForm onAddCard={onAddCard} columnId={id} />}
+                    {state.showNewCardForm && <NewCardForm onAddCard={handleAddCard} columnId={id} />}
                     <Droppable droppableId={id}>
                         {(provided, snapshot) => (
                             <div

@@ -1,3 +1,4 @@
+// Task component
 import { Draggable } from 'react-beautiful-dnd';
 import TaskContainer from './TaskContainer';
 import TaskContent from './TaskContent';
@@ -6,6 +7,7 @@ import EditableTaskTitle from './EditableTaskTitle';
 import { useState } from 'react';
 
 export default function Task({ task, index, onDelete, onUpdateTitle }) {
+    //console.log('Task Object:', task);
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
@@ -28,13 +30,7 @@ export default function Task({ task, index, onDelete, onUpdateTitle }) {
                             onBlur={handleBlurTitle}
                         />
                     ) : (
-                        <TaskContent isEditing={isEditing}>
-                            <div className="text-xl font-bold text-gray-800 mb-2">{task.title}</div>
-                            {task.completed && (
-                                <p className="text-sm text-gray-500 mb-2">Finalizada em {task.completionDate}</p>
-                            )}
-                            <p className="text-xs text-gray-400">{task.id}</p>
-                        </TaskContent>
+                        <TaskContent isEditing={isEditing} task={task} />
                     )}
                     {provided.placeholder}
                 </TaskContainer>

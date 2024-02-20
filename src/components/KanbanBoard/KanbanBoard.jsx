@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from '../Column/Column';
-import MockTasks from './MockTasks';
 import HandleDragEnd from './HandleDragEnd';
 import HandleDeleteTask from './HandleDeleteTask';
 import HandleAddCard from './HandleAddCard';
 import HandleUpdateCardText from './HandleUpdateCardText';
 
-export default function KanbanBoard() {
+export default function KanbanBoard({ tasks }) {
     const [completed, setCompleted] = useState([]);
     const [doing, setDoing] = useState([]);
     const [incomplete, setIncomplete] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
 
     useEffect(() => {
-        setCompleted(MockTasks.filter((task) => task.completed && !task.doing));
-        setDoing(MockTasks.filter((task) => task.doing));
-        setIncomplete(MockTasks.filter((task) => !task.completed && !task.doing));
-    }, []);
+        setCompleted(tasks.filter((task) => task.completed && !task.doing));
+        setDoing(tasks.filter((task) => task.doing));
+        setIncomplete(tasks.filter((task) => !task.completed && !task.doing));
+    }, [tasks]);
 
     const handleDeleteTask = (taskId) => {
         HandleDeleteTask({
@@ -31,19 +30,19 @@ export default function KanbanBoard() {
         });
     };
 
-    const handleAddCard = (columnId, title) => {
-        HandleAddCard({
-            columnId,
-            title,
-            setIncomplete,
-            setDoing,
-            setCompleted,
-            incomplete,
-            doing,
-            completed,
-        });
+    const handleAddCard = async (columnId, title) => {
+        try {
+            await HandleAddCard({
+                columnId,
+                title,
+                setIncomplete,
+                setDoing,
+                setCompleted,
+            });
+        } catch (error) {
+            console.error('Error adding card:', error.message);
+        }
     };
-
     const handleUpdateTitle = (taskId, newTitle) => {
         HandleUpdateCardText({
             taskId,
@@ -114,27 +113,36 @@ export default function KanbanBoard() {
                     {/* Columns go here */}
                     <Column
                         title={"To Do"}
-                        tasks={filteredTasks.length > 0 ? filteredTasks.filter((task) => incomplete.includes(task)) : incomplete}
+                        tasks={incomplete}
                         id={'1'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
                         onUpdateTitle={handleUpdateTitle}
+                        setIncomplete={setIncomplete}  
+                        setDoing={setDoing}
+                        setCompleted={setCompleted}
                     />
                     <Column
                         title={"Doing"}
-                        tasks={filteredTasks.length > 0 ? filteredTasks.filter((task) => doing.includes(task)) : doing}
+                        tasks={doing}
                         id={'2'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
                         onUpdateTitle={handleUpdateTitle}
+                        setIncomplete={setIncomplete}  
+                        setDoing={setDoing}
+                        setCompleted={setCompleted}
                     />
                     <Column
                         title={"Ready"}
-                        tasks={filteredTasks.length > 0 ? filteredTasks.filter((task) => completed.includes(task)) : completed}
+                        tasks={completed}  
                         id={'3'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
                         onUpdateTitle={handleUpdateTitle}
+                        setIncomplete={setIncomplete}  
+                        setDoing={setDoing}
+                        setCompleted={setCompleted}
                     />
                 </div>
             </div>
