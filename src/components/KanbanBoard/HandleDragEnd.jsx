@@ -1,11 +1,11 @@
-    // Funções para achar itens no array e remover do array
-    function findItemById(id, array) {
-        return array.find((item) => item.id == id);
-    }
+// Funções para achar itens no array e remover do array
+function findItemById(id, array) {
+    return array.find((item) => item.id == id);
+}
 
-    function removeItemById(id, array) {
-        return array.filter((item) => item.id != id);
-    }
+function removeItemById(id, array) {
+    return array.filter((item) => item.id != id);
+}
 
 const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, completed, setCompleted }) => {
     const { destination, source, draggableId } = result;
@@ -35,7 +35,10 @@ const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, com
     // Adiciona à coluna de destino
     switch (destination.droppableId) {
         case '3':
-            setCompleted((prev) => [...prev, { ...task, completed: true }]);
+            setCompleted((prev) => [
+                ...prev,
+                { ...task, completed: true, completionDate: new Date().toISOString().slice(0, 10) },
+            ]);
             break;
         case '2':
             setDoing((prev) => [...prev, { ...task, completed: false }]);
