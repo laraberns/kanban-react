@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash, faEye, faSortAmountUp, faSortAmountDown, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import HandleAddCard from '../KanbanBoard/HandleAddCard';
 
-const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setDoing, setCompleted }) => {
+const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setDoing, setCompleted, filteredTasks }) => {
     const [state, setState] = useState({
         sortAscending: true,
         isColumnHidden: false,
@@ -18,6 +18,7 @@ const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setD
         const orderMultiplier = state.sortAscending ? 1 : -1;
         return orderMultiplier * (a.id - b.id);
     });
+
 
     const handleSortTasks = () => {
         setState((prevState) => ({ ...prevState, sortAscending: !prevState.sortAscending }));

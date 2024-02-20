@@ -13,6 +13,10 @@ export default function KanbanBoard({ tasks }) {
     const [filteredTasks, setFilteredTasks] = useState([]);
 
     useEffect(() => {
+        setFilteredTasks([...incomplete, ...doing, ...completed]);
+    }, [incomplete, doing, completed]);
+
+    useEffect(() => {
         setCompleted(tasks.filter((task) => task.completed && !task.doing));
         setDoing(tasks.filter((task) => task.doing));
         setIncomplete(tasks.filter((task) => !task.completed && !task.doing));
@@ -70,11 +74,19 @@ export default function KanbanBoard({ tasks }) {
 
     const handleSearch = (searchText) => {
         const allTasks = [...incomplete, ...doing, ...completed];
-        const filtered = allTasks.filter((task) =>
-            task.title.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setFilteredTasks(filtered);
+        
+        if (searchText.trim() === '') {
+            // If no search text, set filteredTasks to allTasks
+            setFilteredTasks(allTasks);
+        } else {
+            const filtered = allTasks.filter((task) =>
+                task.title.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setFilteredTasks(filtered);
+        }
     };
+
+    console.log(filteredTasks);
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
@@ -113,7 +125,7 @@ export default function KanbanBoard({ tasks }) {
                     {/* Columns go here */}
                     <Column
                         title={"To Do"}
-                        tasks={incomplete}
+                        tasks={filteredTasks.filter((task) => !task.doing && !task.completed)}
                         id={'1'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
@@ -124,7 +136,7 @@ export default function KanbanBoard({ tasks }) {
                     />
                     <Column
                         title={"Doing"}
-                        tasks={doing}
+                        tasks={filteredTasks.filter((task) => task.doing)}
                         id={'2'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
@@ -135,7 +147,7 @@ export default function KanbanBoard({ tasks }) {
                     />
                     <Column
                         title={"Ready"}
-                        tasks={completed}  
+                        tasks={filteredTasks.filter((task) => !task.doing && task.completed)} 
                         id={'3'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}
