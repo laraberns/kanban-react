@@ -1,6 +1,4 @@
-
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from '../Column/Column';
 import MockTasks from './MockTasks';
@@ -8,14 +6,15 @@ import HandleDragEnd from './HandleDragEnd';
 import HandleDeleteTask from './HandleDeleteTask';
 import HandleAddCard from './HandleAddCard';
 import HandleUpdateCardText from './HandleUpdateCardText';
+import TaskSearch from './TaskSearch';
 
 export default function KanbanBoard() {
     const [completed, setCompleted] = useState([]);
     const [doing, setDoing] = useState([]);
     const [incomplete, setIncomplete] = useState([]);
+    const [filteredTasks, setFilteredTasks] = useState([]);
 
     useEffect(() => {
-        // Inicializa os estados com as tarefas simulando o carregamento de uma API
         setCompleted(MockTasks.filter((task) => task.completed && !task.doing));
         setDoing(MockTasks.filter((task) => task.doing));
         setIncomplete(MockTasks.filter((task) => !task.completed && !task.doing));
@@ -47,7 +46,7 @@ export default function KanbanBoard() {
     };
 
     const handleUpdateTitle = (taskId, newTitle) => {
-        HandleUpdateCardText ({
+        HandleUpdateCardText({
             taskId,
             newTitle,
             setIncomplete,
@@ -71,19 +70,13 @@ export default function KanbanBoard() {
         });
     };
 
-    const filterTasksByColumn = (columnId) => {
-        switch (columnId) {
-            case '1':
-                return incomplete;
-            case '2':
-                return doing;
-            case '3':
-                return completed;
-            default:
-                return [];
-        }
+    const handleSearch = (searchText) => {
+        const allTasks = [...incomplete, ...doing, ...completed];
+        const filtered = allTasks.filter((task) =>
+            task.title.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredTasks(filtered);
     };
-    
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
@@ -92,33 +85,36 @@ export default function KanbanBoard() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                 }}
             >
-                <Column
-                    title={"To Do"}
-                    tasks={incomplete}
-                    id={'1'}
-                    onAddCard={handleAddCard}
-                    onDelete={handleDeleteTask}
-                    onUpdateTitle={handleUpdateTitle}
-                />
-                <Column
-                    title={"Doing"}
-                    tasks={doing}
-                    id={'2'}
-                    onAddCard={handleAddCard}
-                    onDelete={handleDeleteTask}
-                    onUpdateTitle={handleUpdateTitle}
-                />
-                <Column
-                    title={"Ready"}
-                    tasks={completed}
-                    id={'3'}
-                    onAddCard={handleAddCard}
-                    onDelete={handleDeleteTask}
-                    onUpdateTitle={handleUpdateTitle}
-                />
+                <TaskSearch tasks={[...incomplete, ...doing, ...completed]} onSearch={handleSearch} />
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Column
+                        title={"To Do"}
+                        tasks={filteredTasks.length > 0 ? filteredTasks.filter(task => incomplete.includes(task)) : incomplete}
+                        id={'1'}
+                        onAddCard={handleAddCard}
+                        onDelete={handleDeleteTask}
+                        onUpdateTitle={handleUpdateTitle}
+                    />
+                    <Column
+                        title={"Doing"}
+                        tasks={filteredTasks.length > 0 ? filteredTasks.filter(task => doing.includes(task)) : doing}
+                        id={'2'}
+                        onAddCard={handleAddCard}
+                        onDelete={handleDeleteTask}
+                        onUpdateTitle={handleUpdateTitle}
+                    />
+                    <Column
+                        title={"Ready"}
+                        tasks={filteredTasks.length > 0 ? filteredTasks.filter(task => completed.includes(task)) : completed}
+                        id={'3'}
+                        onAddCard={handleAddCard}
+                        onDelete={handleDeleteTask}
+                        onUpdateTitle={handleUpdateTitle}
+                    />
+                </div>
             </div>
         </DragDropContext>
     );

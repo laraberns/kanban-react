@@ -17,7 +17,7 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 - ✅ **Adição, Movimentação e Remoção:** Os usuários podem adicionar novas tarefas, movê-las entre as colunas e removê-las conforme necessário.
 - ✅ **Detalhes da Tarefa:** As tarefas possuem nome e data de conclusão.
 - ✅ **Filtros e Ordenação:** Implementei funcionalidades de filtro e ordenação para facilitar o gerenciamento das tarefas.
-- 🔲 **Pesquisa por Texto (Opcional):** Adicionei a capacidade de pesquisar tarefas por texto, tornando a experiência mais personalizada.
+- ✅ **Pesquisa por Texto (Opcional):** Adicionei a capacidade de pesquisar tarefas por texto, tornando a experiência mais personalizada.
 
 ### Tecnologias e Práticas:
 

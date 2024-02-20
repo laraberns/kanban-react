@@ -63,6 +63,7 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
             <button onClick={handleSortTasks}>Ordenar por Id (Crescente)</button>
             <button onClick={() => setSortAscending(false)}>Ordenar por Id (Decrescente)</button>
             <button onClick={handleHideColumn}>Esconder Coluna</button>
+            <NewCardForm onAddCard={onAddCard} columnId={id} />
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
                     <DroppableContainer
@@ -80,7 +81,7 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
                             />
                         ))}
                         {provided.placeholder}
-                        <NewCardForm onAddCard={onAddCard} columnId={id} />
+
                     </DroppableContainer>
                 )}
             </Droppable>
