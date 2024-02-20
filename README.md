@@ -8,6 +8,7 @@ Este repositório contém o código-fonte para um aplicativo simples de Kanban, 
 
 - 🔲 Atividade a ser elaborada.
 - ✅ Atividade feita.
+- ⚠️ Atividade feita com observações.
 
 ### Interface do Usuário:
 
@@ -23,7 +24,8 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 
 - ✅ **ReactJS:** Utilizei o React para o desenvolvimento da interface, aproveitando sua eficiência e reatividade.
 - ✅ **Ciclo de Vida e Gerenciamento de Estado:** Aplicei conceitos do ciclo de vida do React e gerenciamento de estado para uma experiência de usuário suave e eficiente.
-- 🔲 **Bootstrap React (Opcional):** Ofereci a opção de utilizar o Bootstrap React para acelerar o desenvolvimento, mantendo a estética moderna e responsiva.
+- ⚠️ **Bootstrap React (Opcional):** Ofereci a opção de utilizar o Bootstrap React para acelerar o desenvolvimento, mantendo a estética moderna e responsiva. 
+***Foi utilizado Tailwind no projeto em vez de Bootstrap
 
 ### Construção:
 - React Beautiful DnD: Utilizei a biblioteca React Beautiful DnD para facilitar a implementação de arrastar e soltar, proporcionando uma interação intuitiva com as tarefas.

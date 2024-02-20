@@ -1,34 +1,14 @@
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import Container from './ColumnContainer';
-import Title from './ColumnTitle';
-import DroppableContainer from './DroppableContainer';
 import Task from '../Task/Task';
-
-const NewCardForm = ({ onAddCard, columnId }) => {
-    const [newCardInput, setNewCardInput] = useState('');
-
-    const handleAddCard = () => {
-        onAddCard(columnId, newCardInput);
-        setNewCardInput('');
-    };
-
-    return (
-        <div>
-            <input
-                type="text"
-                placeholder="Enter new card title"
-                value={newCardInput}
-                onChange={(e) => setNewCardInput(e.target.value)}
-            />
-            <button onClick={handleAddCard}>Add Card</button>
-        </div>
-    );
-};
+import NewCardForm from './NewCardForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEyeSlash, faEye, faSortAmountUp, faSortAmountDown, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
     const [sortAscending, setSortAscending] = useState(true);
     const [isColumnHidden, setIsColumnHidden] = useState(false);
+    const [showNewCardForm, setShowNewCardForm] = useState(false);
 
     const handleSortTasks = () => {
         setSortAscending((prevSortAscending) => !prevSortAscending);
@@ -40,6 +20,10 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
 
     const handleShowColumn = () => {
         setIsColumnHidden(false);
+    };
+
+    const handleToggleNewCardForm = () => {
+        setShowNewCardForm(!showNewCardForm);
     };
 
     const sortedTasks = [...tasks].sort((a, b) => {
@@ -56,37 +40,64 @@ const Column = ({ title, tasks, id, onAddCard, onDelete, onUpdateTitle }) => {
     }
 
     return (
-        <Container>
-            <Title>
-                {title}
-            </Title>
-            <button onClick={handleSortTasks}>Ordenar por Id (Crescente)</button>
-            <button onClick={() => setSortAscending(false)}>Ordenar por Id (Decrescente)</button>
-            <button onClick={handleHideColumn}>Esconder Coluna</button>
-            <NewCardForm onAddCard={onAddCard} columnId={id} />
-            <Droppable droppableId={id}>
-                {(provided, snapshot) => (
-                    <DroppableContainer
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        $isDraggingOver={snapshot.isDraggingOver}
-                    >
-                        {sortedTasks.map((task, index) => (
-                            <Task
-                                key={index}
-                                index={index}
-                                task={task}
-                                onDelete={onDelete}
-                                onUpdateTitle={onUpdateTitle}
-                            />
-                        ))}
-                        {provided.placeholder}
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 m-4">
+            <div className="bg-gray-200 rounded-md p-4 shadow-md">
+                <div className="font-extrabold text-2xl mb-2 text-purple-700 underline">
+                    {title}
+                </div>
 
-                    </DroppableContainer>
-                )}
-            </Droppable>
-        </Container>
+                <div className="flex items-center m-3 justify-center gap-2">
+                    <button className="btn" onClick={handleSortTasks} title="Ordenar por Id (Crescente)">
+                        <FontAwesomeIcon icon={faSortAmountUp} className="mr-2" />
+                    </button>
+                    <button className="btn" onClick={() => setSortAscending(false)} title="Ordenar por Id (Decrescente)">
+                        <FontAwesomeIcon icon={faSortAmountDown} className="mr-2" />
+                    </button>
+                    <button className="btn" onClick={handleHideColumn} title={isColumnHidden ? "Mostrar Coluna" : "Esconder Coluna"}>
+                        {isColumnHidden ? (
+                            <>
+                                <FontAwesomeIcon icon={faEye} className="mr-2" />
+                            </>
+                        ) : (
+                            <>
+                                <FontAwesomeIcon icon={faEyeSlash} className="mr-2" />
+                            </>
+                        )}
+                    </button>
+                    <button className="btn" onClick={handleToggleNewCardForm} title="Adicionar novo card">
+                        <FontAwesomeIcon icon={showNewCardForm ? faMinus : faPlus} />
+                    </button>
+                </div>
+
+                <div className="h-96 overflow-y-auto bg-gray-200 rounded-md">
+                    {showNewCardForm && <NewCardForm onAddCard={onAddCard} columnId={id} />}
+                    <Droppable droppableId={id}>
+                        {(provided, snapshot) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                style={{
+                                    transition: 'background-color 0.3s ease',
+                                    backgroundColor: snapshot.isDraggingOver ? 'lightblue' : 'inherit',
+                                }}
+                            >
+                                {sortedTasks.map((task, index) => (
+                                    <Task
+                                        key={index}
+                                        index={index}
+                                        task={task}
+                                        onDelete={onDelete}
+                                        onUpdateTitle={onUpdateTitle}
+                                    />
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
+            </div>
+        </div>
     );
-};
+}
 
 export default Column;
