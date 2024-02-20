@@ -7,7 +7,7 @@ import MockTasks from './MockTasks';
 import HandleDragEnd from './HandleDragEnd';
 import HandleDeleteTask from './HandleDeleteTask';
 import HandleAddCard from './HandleAddCard';
-import HandleUpdateCard from './HandleUpdateCard';
+import HandleUpdateCardText from './HandleUpdateCardText';
 
 export default function KanbanBoard() {
     const [completed, setCompleted] = useState([]);
@@ -47,7 +47,7 @@ export default function KanbanBoard() {
     };
 
     const handleUpdateTitle = (taskId, newTitle) => {
-        HandleUpdateCard({
+        HandleUpdateCardText ({
             taskId,
             newTitle,
             setIncomplete,
@@ -70,6 +70,7 @@ export default function KanbanBoard() {
             setCompleted,
         });
     };
+    
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>

@@ -15,7 +15,7 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 
 - ✅ **Três Colunas:** "To Do", "Doing" e "Ready", para organizar suas tarefas.
 - ✅ **Adição, Movimentação e Remoção:** Os usuários podem adicionar novas tarefas, movê-las entre as colunas e removê-las conforme necessário.
-- 🔲 **Detalhes da Tarefa:** As tarefas possuem nome e data de conclusão.
+- ✅ **Detalhes da Tarefa:** As tarefas possuem nome e data de conclusão.
 - 🔲 **Filtros e Ordenação:** Implementei funcionalidades de filtro e ordenação para facilitar o gerenciamento das tarefas.
 - 🔲 **Pesquisa por Texto (Opcional):** Adicionei a capacidade de pesquisar tarefas por texto, tornando a experiência mais personalizada.
 
@@ -30,7 +30,7 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 - Styled-Components: Utilizei a biblioteca Styled-Components, que permite escrever CSS em JS enquanto constrói componentes personalizados no React, proporcionando uma estilização modular e reutilizável.
 
 ### Features Adicionais:
-- Editar as tarefas criadas.
+- Editar os nomes das tarefas criadas.
   
 ## Como Executar o Projeto:
 

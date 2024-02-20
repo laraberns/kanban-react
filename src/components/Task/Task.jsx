@@ -18,21 +18,26 @@ export default function Task({ task, index, onDelete, onUpdateTitle }) {
     };
 
     return (
-        <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
-            {(provided, snapshot) => (
-                <TaskContainer provided={provided} snapshot={snapshot}>
-                    <TaskActions onDelete={() => onDelete(task.id)} onEdit={handleEditClick} />
-                    {isEditing ? (
-                        <EditableTaskTitle
-                            initialTitle={task.title}
-                            onBlur={handleBlurTitle}
-                        />
-                    ) : (
-                        <TaskContent isEditing={isEditing}>{task.title}</TaskContent>
-                    )}
-                    {provided.placeholder}
-                </TaskContainer>
-            )}
-        </Draggable>
+        <Draggable draggableId={`${task.id}`} index={index}>
+        {(provided, snapshot) => (
+            <TaskContainer provided={provided} snapshot={snapshot}>
+                <TaskActions onDelete={() => onDelete(task.id)} onEdit={handleEditClick} />
+                {isEditing ? (
+                    <EditableTaskTitle
+                        initialTitle={task.title}
+                        onBlur={handleBlurTitle}
+                    />
+                ) : (
+                    <TaskContent isEditing={isEditing}>
+                        {task.title}
+                        {task.completed && (
+                            <p>Data de conclusão: {task.completionDate}</p>
+                        )}
+                    </TaskContent>
+                )}
+                {provided.placeholder}
+            </TaskContainer>
+        )}
+    </Draggable>
     );
 }

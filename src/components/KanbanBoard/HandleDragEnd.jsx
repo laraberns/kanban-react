@@ -1,14 +1,11 @@
-// Funções para achar itens no array e remover do array
-function findItemById(id, array) {
-    return array.find((item) => item.id == id);
-}
+    // Funções para achar itens no array e remover do array
+    function findItemById(id, array) {
+        return array.find((item) => item.id == id);
+    }
 
-function removeItemById(id, array) {
-    return array.filter((item) => item.id != id);
-}
-
-
-
+    function removeItemById(id, array) {
+        return array.filter((item) => item.id != id);
+    }
 
 const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, completed, setCompleted }) => {
     const { destination, source, draggableId } = result;

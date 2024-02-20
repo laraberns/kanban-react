@@ -5,10 +5,7 @@ const HandleAddCard = ({
     title,
     setIncomplete,
     setDoing,
-    setCompleted,
-    incomplete,
-    doing,
-    completed,
+    setCompleted
 }) => {
     const newTask = { id: Math.random(), title, completed: false, doing: false };
 
