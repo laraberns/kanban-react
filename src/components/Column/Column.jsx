@@ -16,9 +16,8 @@ const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setD
     // Use tasks directly instead of maintaining a separate state for renderedTasks
     const sortedTasks = [...tasks].sort((a, b) => {
         const orderMultiplier = state.sortAscending ? 1 : -1;
-        return orderMultiplier * (a.id - b.id);
+        return orderMultiplier * a.title.localeCompare(b.title, 'en', { sensitivity: 'base' });
     });
-
 
     const handleSortTasks = () => {
         setState((prevState) => ({ ...prevState, sortAscending: !prevState.sortAscending }));
@@ -73,8 +72,8 @@ const Column = ({ title, tasks, id, onDelete, onUpdateTitle, setIncomplete, setD
                 </div>
 
                 <div className="flex items-center m-3 justify-center gap-2">
-                    {renderButton(handleSortTasks, faSortAmountUp, "Ordenar por Id (Crescente)")}
-                    {renderButton(() => setState((prev) => ({ ...prev, sortAscending: false })), faSortAmountDown, "Ordenar por Id (Decrescente)")}
+                    {renderButton(handleSortTasks, faSortAmountUp, "Ordenar Crescente")}
+                    {renderButton(() => setState((prev) => ({ ...prev, sortAscending: false })), faSortAmountDown, "Ordenar Decrescente")}
                     {renderButton(state.isColumnHidden ? handleShowColumn : handleHideColumn, state.isColumnHidden ? faEye : faEyeSlash, state.isColumnHidden ? "Mostrar Coluna" : "Esconder Coluna")}
                     {renderButton(handleToggleNewCardForm, state.showNewCardForm ? faMinus : faPlus, "Adicionar novo card")}
                 </div>
