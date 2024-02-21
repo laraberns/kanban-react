@@ -13,19 +13,20 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    box-shadow: ${(props) =>
+        props.isDragging
+            ? '0 20px 8px rgba(0, 0, 0, 0.2)'
+            : '0 5px 4px rgba(0, 0, 0, 0.1)'};
 `;
 
 function bgcolorchange(props) {
     return props.isDragging
-        ? '#b6f5b4'
+        ? '#b6f5b4' // Green background when dragging
         : props.isDraggable
-        ? props.isBacklog
-            ? '#F2D7D5'
-            : '#DCDCDC'
-        : props.isBacklog
-        ? '#F2D7D5'
-        : '#fffada';
+        ? '#9AFF9A' // Light green background when not dragging and draggable
+        : '#fffada'; // Yellow background when not draggable
 }
+
 
 export default function TaskContainer({ provided, snapshot, children }) {
     return (

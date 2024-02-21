@@ -7,14 +7,32 @@ function removeItemById(id, array) {
     return array.filter((item) => item.id != id);
 }
 
-const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, completed, setCompleted }) => {
+const HandleDragEnd = async ({ result, incomplete, setIncomplete, doing, setDoing, completed, setCompleted }) => {
+
     const { destination, source, draggableId } = result;
+    if (!destination) return;
 
-    if (!destination) return; // Se o destino for inválido, não faz nada
+    if (source.droppableId === destination.droppableId) return;
 
-    if (source.droppableId === destination.droppableId) return; // Se a origem e o destino forem iguais, não faz nada
+    // Update the task status on the backend
+    try {
+        await fetch('http://localhost:3002/api/kanban/updatetaskstatus', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: draggableId,
+                completed: destination.droppableId === '3',
+                doing: destination.droppableId === '2',
+            }),
+        });
+    } catch (error) {
+        console.error("Error updating task status:", error);
+        return;  // Exit the function if there is an error
+    }
 
-    // Remove da coluna de origem
+    // Remove from the source column
     switch (source.droppableId) {
         case '1':
             setIncomplete((prev) => removeItemById(draggableId, prev));
@@ -29,28 +47,30 @@ const HandleDragEnd = ({ result, incomplete, setIncomplete, doing, setDoing, com
             break;
     }
 
-    // Obtém a tarefa
-    const task = findItemById(draggableId, [...incomplete, ...completed, ...doing]);
-
-    // Adiciona à coluna de destino
+    // Add to the destination column
     switch (destination.droppableId) {
         case '3':
             setCompleted((prev) => [
                 ...prev,
-                { ...task, completed: true, completionDate: new Date().toISOString().slice(0, 10) }, //Set data para hoje quando mover o card para "Ready"
+                { ...findItemById(draggableId, [...incomplete, ...doing, ...completed]), completed: true, completionDate: new Date().toISOString().slice(0, 10), doing: false },
             ]);
             break;
         case '2':
-            setDoing((prev) => [...prev, { ...task, completed: false }]);
+            setDoing((prev) => [
+                ...prev,
+                { ...findItemById(draggableId, [...incomplete, ...doing, ...completed]), completed: false, doing: true },
+            ]);
             break;
         case '1':
-            setIncomplete((prev) => [...prev, { ...task, completed: false }]);
+            setIncomplete((prev) => [
+                ...prev,
+                { ...findItemById(draggableId, [...incomplete, ...doing, ...completed]), completed: false, doing: false },
+            ]);
             break;
         default:
             break;
     }
-
-    return null;
 };
+
 
 export default HandleDragEnd;

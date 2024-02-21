@@ -14,6 +14,7 @@ export default function Task({ task, index, onDelete, onUpdateTitle }) {
     };
 
     const handleBlurTitle = (newTitle) => {
+        console.log('Blur Title:', newTitle);
         onUpdateTitle(task.id, newTitle);
         setIsEditing(false);
     };

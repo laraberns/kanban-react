@@ -18,7 +18,7 @@ export default function KanbanBoard({ tasks }) {
 
     useEffect(() => {
         setCompleted(tasks.filter((task) => task.completed && !task.doing));
-        setDoing(tasks.filter((task) => task.doing));
+        setDoing(tasks.filter((task) => !task.completed && task.doing));
         setIncomplete(tasks.filter((task) => !task.completed && !task.doing));
     }, [tasks]);
 
@@ -86,8 +86,6 @@ export default function KanbanBoard({ tasks }) {
         }
     };
 
-    console.log(filteredTasks);
-
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
             <div className="flex flex-col h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
@@ -136,7 +134,7 @@ export default function KanbanBoard({ tasks }) {
                     />
                     <Column
                         title={"Doing"}
-                        tasks={filteredTasks.filter((task) => task.doing)}
+                        tasks={filteredTasks.filter((task) => task.doing && !task.completed)}
                         id={'2'}
                         onAddCard={handleAddCard}
                         onDelete={handleDeleteTask}

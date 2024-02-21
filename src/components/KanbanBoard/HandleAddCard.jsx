@@ -7,6 +7,7 @@ const HandleAddCard = async ({
 }) => {
     try {
         let newTask;
+        const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
 
         switch (columnId) {
             case '1':
@@ -18,7 +19,7 @@ const HandleAddCard = async ({
                 setDoing((prev) => [...prev, newTask]);
                 break;
             case '3':
-                newTask = { title, completed: true, doing: false, completionDate: null };
+                newTask = { title, completed: true, doing: false, completionDate: today }; // Set completion date to today
                 setCompleted((prev) => [...prev, newTask]);
                 break;
             default:

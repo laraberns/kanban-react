@@ -1,5 +1,3 @@
-
-
 const HandleDeleteTask = async ({
   taskId,
   incomplete,
