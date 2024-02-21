@@ -43,7 +43,7 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 
 ### Como executar o Projeto
 
-1. Clone ambos os repositórios: `git clone https://github.com/laraberns/kanban-react.git` e `git clone https://github.com/laraberns/kanban-backend.git`
+1. Clone ambos os repositórios: `git clone https://github.com/laraberns/kanban-react.git` e `git clone https://github.com/laraberns/kanban-node.git`
 2. Navegue até os diretórios correspondentes e baixe as dependências
 3. Inicie o front-end: `npm start`
 3. Inicie o back-end: `node index.js`
