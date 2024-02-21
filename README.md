@@ -40,13 +40,21 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 2. Instale as dependências: `npm install`
 3. Inicie o frontend: `npm start`
 
-
 ### Como executar o Projeto
 
 1. Clone ambos os repositórios: `git clone https://github.com/laraberns/kanban-react.git` e `git clone https://github.com/laraberns/kanban-node.git`
 2. Navegue até os diretórios correspondentes e baixe as dependências
 3. Inicie o front-end: `npm start`
 3. Inicie o back-end: `node index.js`
+
+## Configuração das Variáveis de Ambiente
+
+1. Crie um arquivo chamado `.env` no diretório raiz do backend.
+
+2. Adicione as seguintes linhas ao arquivo `.env`:
+
+   ```plaintext
+   MONGODB_CONNECTION_STRING=sua_chave_de_conexao_do_mongodb
 
 Agora, você pode acessar o aplicativo Kanban em [http://localhost:3000](http://localhost:3001) e interagir com suas tarefas.
 
