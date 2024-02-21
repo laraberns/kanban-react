@@ -9,7 +9,7 @@ export default function TaskContent({ task }) {
             <TextContent>
                 <div className="text-xl font-bold text-gray-800 mb-2">{task.title}</div>
                 {task.completed && (
-                    <p className="text-sm text-gray-500">Completion Date: {task.completionDate}</p>
+                    <p className="text-sm text-gray-500">Completada em: {task.completionDate}</p>
                 )}
                 {task.id !== undefined && (
                     <p className="text-xs text-gray-400">ID: {task.id}</p>
