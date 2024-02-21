@@ -34,11 +34,19 @@ Desenvolvi uma interface simples e intuitiva para o aplicativo Kanban, que inclu
 ### Features Adicionais:
 - Editar os nomes das tarefas criadas.
   
-## Como Executar o Projeto:
+### Como executar o [Front-End](https://github.com/laraberns/kanban-react)
 
 1. Clone este repositório: `git clone https://github.com/laraberns/kanban-react.git`
 2. Instale as dependências: `npm install`
 3. Inicie o frontend: `npm start`
+
+
+### Como executar o Projeto
+
+1. Clone ambos os repositórios: `git clone https://github.com/laraberns/kanban-react.git` e `git clone https://github.com/laraberns/kanban-backend.git`
+2. Navegue até os diretórios correspondentes e baixe as dependências
+3. Inicie o front-end: `npm start`
+3. Inicie o back-end: `node index.js`
 
 Agora, você pode acessar o aplicativo Kanban em [http://localhost:3000](http://localhost:3001) e interagir com suas tarefas.
 
